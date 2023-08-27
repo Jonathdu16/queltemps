@@ -12,10 +12,6 @@
   ],
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
-  "devDependencies": {
-    "cordova-android": "^12.0.0",
-    "cordova-plugin-geolocation": "^4.1.0"
-  },
   "cordova": {
     "plugins": {
       "cordova-plugin-geolocation": {}
@@ -23,5 +19,13 @@
     "platforms": [
       "android"
     ]
+  },
+  "devDependencies": {
+    "cordova-android": "^12.0.0",
+    "cordova-plugin-geolocation": "^4.1.0"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.5.0"
   }
 }
