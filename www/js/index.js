@@ -19,42 +19,22 @@
 
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
+import { Geolocalisation } from './geolocalisation.js';
+import { ApiController } from './app/Controller/ApiController.js';
 
-// import {Geolocalisation} from './Geolocalisation.js';
+const geolocalisation = new Geolocalisation();
 
-// const geolocalisation = new Geolocalisation();
-document.addEventListener('deviceready', onDeviceReady, false);
 
-function onDeviceReady() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        obtenirLocalisation,
-        afficherErreur
-      );
-    } else {
-      document.getElementById('erreur').innerHTML =
-        "Erreur : La géolocalisation n'est pas prise en charge par ce navigateur/dispositif.";
-    }
-  }
+document.addEventListener('deviceready', geolocalisation.onDeviceReady(), false);
 
-function obtenirLocalisation(position) {
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
-    document.getElementById('localisation').innerHTML =
-      'Localisation : ' + latitude + ', ' + longitude;
 
-    // Faites quelque chose avec les coordonnées, par exemple, afficher la météo
-  }
-
-function afficherErreur(error) {
-  if (error.code === 1) {
-    document.getElementById('erreur').innerHTML =
-      "L'utilisateur a refusé l'autorisation de géolocalisation.";
-  } else {
-    console.error('Erreur de géolocalisation : ' + error.message);
-  }
-}
-
-// let weatherCity = document.querySelector('input[name="street]');
-
-// let 
+document.addEventListener('geolocationData', (event) => {
+  // Récupérez les données de géolocalisation et faites quelque chose avec elles
+  const data = event.detail;
+  console.log('Données de géolocalisation reçues:', data);
+  
+  // Créez une instance de ApiController avec les données de géolocalisation
+  
+  const apiController = new ApiController(null, data.longitude, data.latitude);
+  apiController.root_meteo();
+});

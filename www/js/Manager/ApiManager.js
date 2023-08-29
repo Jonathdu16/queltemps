@@ -21,9 +21,15 @@ class ApiManager {
         return this.connexionApiMeteo.test_connexion_api(city);
     }
 
-    _get_data_weather_by_lon_and_lat() {
-        let long_and_lat = `http://api.openweathermap.org/data/2.5/forecast/daily?lat=${this.latitude}&lon=${this.longitude}&appid=${this.IdConnexion.apiKey}&lang=fr`;
-        return this.connexionApiMeteo.test_connexion_api(long_and_lat);
+    async _get_data_weather_by_lon_and_lat() {
+        let long_and_lat = `http://api.openweathermap.org/data/2.5/forecast?lat=${this.latitude}&lon=${this.longitude}&appid=${this.IdConnexion.apiKey}&units=metric&lang=fr`;
+        try{
+            const weatherData = await this.connexionApiMeteo.test_connexion_api(long_and_lat);
+            // console.log(weatherData.list);
+            return weatherData;
+        }catch (error) {
+            console.error("Erreur lors de la récupération des données météo :", error);
+        }
     }
 }
 
